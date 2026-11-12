@@ -252,7 +252,19 @@ function speak(text) {
   }
   isSpeaking = true;
   document.getElementById('status').innerText = "K.I.T.T. HABLANDO...";
-  if (voiceType === 'rapida') { speakBrowser(text); return; }
+  if (voiceType === 'rapida') {
+    // En celulares (Android) casi nunca hay voz de hombre en el navegador:
+    // en ese caso se usa la voz de Google (VOZ KITT), que sí es masculina
+    waitForVoices().then(voices => {
+      if (pickKittVoice(voices)) { speakBrowser(text); return; }
+      if (!avisoSinVozHombre) {
+        avisoSinVozHombre = true;
+        console.warn("Este aparato no tiene voz de hombre en español: uso la voz de Google.");
+      }
+      speakGemini(text).catch(() => speakBrowser(text));
+    });
+    return;
+  }
   speakGemini(text).catch(err => {
     console.warn("Voz de Gemini no disponible, uso la voz del navegador:", err);
     speakBrowser(text);
@@ -265,6 +277,7 @@ const VOCES_HOMBRE = ['Jorge', 'Luis', 'Alvaro', 'Gonzalo', 'Tomas', 'Lorenzo', 
                       'Federico', 'Gerardo', 'Mateo', 'Sebastian', 'Mario', 'Rodrigo', 'Carlos', 'Roberto',
                       'Raul', 'Pablo', 'Alonso', 'Arnau', 'Dario', 'Saul', 'Teo', 'Yago', 'Javier', 'Marcelo'];
 let kittVoiceName = localStorage.getItem('kitt_voice_name') || null;
+let avisoSinVozHombre = false;
 
 // Las voces de Edge cargan con retraso: esperar hasta que estén listas
 function waitForVoices() {
