@@ -224,6 +224,17 @@
     #faces-box .note { color: #aaa; font-size: 13px; }
     button.mini { padding: 4px 10px; font-size: 12px; margin-left: 10px; }
     @media (max-width: 600px) { #cam-box { width: 130px; } #start-screen .logo { font-size: 36px; } }
+
+    /* ===== VIAJE ===== */
+    #gps-info { color: #ff6666; text-align: center; flex: 1; padding: 0 10px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+    #action-box {
+      display: none; position: fixed; left: 50%; bottom: 110px; transform: translateX(-50%);
+      z-index: 15; gap: 8px; align-items: center; max-width: 92vw;
+    }
+    #action-btn {
+      background: #22e03a; color: #002a06; border: 2px solid #000; font-size: 18px; padding: 16px 22px;
+      box-shadow: 0 0 18px #22e03a; max-width: 75vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
   </style>
 </head>
 <body>
@@ -235,6 +246,7 @@
 
   <div class="header">
     <div>SISTEMA: K.I.T.T. v1.0</div>
+    <div id="gps-info">GPS EN ESPERA</div>
     <div id="mem-count">MEMORIAS: 0</div>
   </div>
 
@@ -315,7 +327,13 @@
     <button onclick="toggleFacesModal()">CERRAR</button>
   </div>
 
+  <div id="action-box">
+    <button id="action-btn">▶ ABRIR</button>
+    <button class="mini" onclick="closeActionBox()">✕</button>
+  </div>
+
   <script src="kitt.js"></script>
   <script src="camara.js"></script>
+  <script src="viaje.js"></script>
 </body>
 </html>

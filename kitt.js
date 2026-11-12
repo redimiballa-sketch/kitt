@@ -196,6 +196,8 @@ async function processWithKitt(userText) {
 
   ${typeof presenceInfo === 'function' ? presenceInfo() : ''}
 
+  ${typeof travelInfo === 'function' ? travelInfo() : ''}
+
   INSTRUCCIÓN DE MEMORIA: Si David menciona algún dato nuevo e importante sobre sí mismo, sus gustos, planes, mantenimiento del auto o experiencias, al final de tu respuesta añade exactamente una etiqueta oculta así: [MEMORIA: dato resumido en una frase corta]. Si no hay nada nuevo que recordar, no pongas la etiqueta.`;
 
   chatHistory.push({ role: "user", parts: [{ text: userText }] });
@@ -227,6 +229,7 @@ async function processWithKitt(userText) {
     }
 
     isProcessing = false;
+    if (typeof handleActions === 'function') reply = handleActions(reply);
     chatHistory.push({ role: "model", parts: [{ text: reply }] });
     document.getElementById('transcript').innerText = `KITT: "${reply}"`;
     speak(reply);

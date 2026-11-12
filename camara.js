@@ -58,6 +58,7 @@ function presenceInfo() {
 function startKitt() {
   document.getElementById('start-screen').style.display = 'none';
   kittStarted = true;
+  if (typeof startGps === 'function') startGps();
 
   if (!API_KEY) configApiKey();
 
