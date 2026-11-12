@@ -69,7 +69,9 @@ function startKitt() {
   } catch (e) {}
 
   // Encender la cámara si estaba encendida la última vez
-  if (localStorage.getItem('kitt_cam') === 'on') startCamera();
+  // Cámara automática (salvo que la hayas apagado a propósito)
+  if (localStorage.getItem('kitt_cam') !== 'off') startCamera();
+  if (typeof keepScreenOn === 'function') keepScreenOn();
 
   // Saludo inicial y luego conversación automática
   if (API_KEY) {

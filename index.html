@@ -235,6 +235,24 @@
       background: #22e03a; color: #002a06; border: 2px solid #000; font-size: 18px; padding: 16px 22px;
       box-shadow: 0 0 18px #22e03a; max-width: 75vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
+
+    /* ===== MAPA Y MÚSICA ===== */
+    #nav-panel {
+      display: none; flex-direction: column; position: fixed; z-index: 12;
+      left: 16px; right: 16px; bottom: 96px; height: 42vh;
+      border: 2px solid #ff2a2a; background: #000;
+    }
+    @media (min-width: 900px) { #nav-panel { left: auto; width: 40vw; top: 70px; bottom: 96px; height: auto; } }
+    #nav-head { display: flex; gap: 6px; align-items: center; padding: 6px; border-bottom: 1px solid #440000; }
+    #nav-info { flex: 1; font-size: 13px; color: #22e03a; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    #nav-map { flex: 1; }
+    #music-bar {
+      display: none; position: fixed; z-index: 12; top: 56px; left: 16px;
+      flex-direction: column; gap: 4px; padding: 6px; background: #0d0000; border: 2px solid #ff2a2a; width: 236px;
+    }
+    #music-head { display: flex; gap: 6px; align-items: center; }
+    #music-title { flex: 1; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    #music-player iframe { border: 0; display: block; }
   </style>
 </head>
 <body>
@@ -330,6 +348,23 @@
   <div id="action-box">
     <button id="action-btn">▶ ABRIR</button>
     <button class="mini" onclick="closeActionBox()">✕</button>
+  </div>
+
+  <div id="nav-panel">
+    <div id="nav-head">
+      <div id="nav-info">CALCULANDO RUTA...</div>
+      <button class="mini" onclick="openInGoogleMaps()" title="Abrir en Google Maps">MAPS</button>
+      <button class="mini" onclick="stopNavigation()" title="Cancelar ruta">✕</button>
+    </div>
+    <div id="nav-map"></div>
+  </div>
+
+  <div id="music-bar">
+    <div id="music-head">
+      <div id="music-title">♪</div>
+      <button class="mini" onclick="stopMusic()" title="Detener música">■</button>
+    </div>
+    <div id="music-player"></div>
   </div>
 
   <script src="kitt.js"></script>
